@@ -45,8 +45,7 @@ class BlogsController < ApplicationController
   private
 
   def set_blog
-    @blog = Blog.find(params[:id])
-    raise ActiveRecord::RecordNotFound if @blog.secret? && !@blog.owned_by?(current_user)
+    @blog = Blog.reachable(current_user).find(params[:id])
   end
 
   def correct_user
